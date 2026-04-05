@@ -33,4 +33,28 @@
 ## Tools Used
 
 - Postman for API testing
-- ChatGPT for guidance and validation
+
+### Issue 2: Incorrect SQL filtering logic due to AND/OR precedence
+
+- Problem:
+  The API returned incorrect results when filtering by search term and status.
+  Tasks with wrong status or archived tasks were appearing in results.
+
+- Root Cause:
+  The SQL query did not group conditions properly. Due to SQL operator precedence (AND > OR),
+  the query was evaluated incorrectly.
+
+- How I Found:
+  Tested API using Postman:
+  GET /api/tasks?q=api&status=DONE
+
+Observed that results included tasks with incorrect status (e.g., OPEN),
+which should not happen.
+
+- Fix:
+  Added parentheses to correctly group conditions:
+
+archived = FALSE AND (title LIKE term OR description LIKE term) AND status condition
+
+- Why:
+  Ensures correct filtering logic and prevents invalid data from being returned.
