@@ -29,7 +29,11 @@ public class TaskController {
         // Parse status filter
         String normalizedStatus = null;
         if (status != null && !status.isEmpty()) {
-            normalizedStatus = TaskStatus.valueOf(status.toUpperCase()).name();
+            try {
+                normalizedStatus = TaskStatus.valueOf(status.toUpperCase()).name();
+            } catch (IllegalArgumentException e) {
+                normalizedStatus = null; // ignore invalid status
+            }
         }
 
 
