@@ -58,3 +58,21 @@ archived = FALSE AND (title LIKE term OR description LIKE term) AND status condi
 
 - Why:
   Ensures correct filtering logic and prevents invalid data from being returned.
+
+### Issue 3: API crash on invalid status input
+
+- Problem:
+  API crashed with 500 error when invalid status value was provided.
+
+- Root Cause:
+  Used TaskStatus.valueOf() without validation, causing IllegalArgumentException.
+
+- How I Found:
+  Tested API using invalid input:
+  GET /api/tasks?status=INVALID
+
+- Fix:
+  Wrapped parsing logic in try-catch block and handled invalid input safely.
+
+- Why:
+  Prevents API crash and improves robustness.
