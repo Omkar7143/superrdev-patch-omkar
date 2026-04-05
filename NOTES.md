@@ -76,3 +76,21 @@ archived = FALSE AND (title LIKE term OR description LIKE term) AND status condi
 
 - Why:
   Prevents API crash and improves robustness.
+
+### Issue 4: Pagination crash for invalid page values
+
+- Problem:
+  API crashed when page <= 0 due to invalid index calculation.
+
+- Root Cause:
+  Negative start index passed to subList().
+
+- How I Found:
+  Tested:
+  GET /api/tasks?page=0
+
+- Fix:
+  Validated page and pageSize to ensure minimum values.
+
+- Why:
+  Prevents runtime exception and improves API robustness.
