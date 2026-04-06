@@ -94,3 +94,26 @@ archived = FALSE AND (title LIKE term OR description LIKE term) AND status condi
 
 - Why:
   Prevents runtime exception and improves API robustness.
+
+### Issue 5: Inefficient search for empty query
+
+- Problem:
+  Empty search query resulted in LIKE '%%', causing full table scan and inefficient performance.
+
+- Root Cause:
+  Search term was always constructed even when query was empty.
+
+- How I Found:
+  Compared:
+  GET /api/tasks?q=
+  GET /api/tasks
+
+Observed identical results but inefficient SQL execution.
+
+- Fix:
+  Handled empty query by passing null and updating SQL to skip LIKE condition.
+
+- Why:
+  Improves database performance and avoids unnecessary full scans.
+
+
