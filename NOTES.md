@@ -116,4 +116,13 @@ Observed identical results but inefficient SQL execution.
 - Why:
   Improves database performance and avoids unnecessary full scans.
 
+### Improvement: Structured Logging
 
+- Problem:
+  Used System.out.println for logging, which is not suitable for production.
+
+- Fix:
+  Replaced with SLF4J Logger.
+
+- Why:
+  Provides structured logging, log levels, and better debugging support.
